@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#141118">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>Kho IPA Tiện Ích </title>
+  <title>Kho IPA Tiện Ích</title>
   <meta property="og:description" content="Lưu trữ các ứng dụng jailbreak, cập nhật nhanh nhất.">
   <meta property="og:image" content="https://raw.githubusercontent.com/ipalongmen06/ipalongmen06.github.io/main/favicon.ico">
   <link rel="apple-touch-icon" href="img/boxlogo.png">
@@ -74,7 +74,7 @@
         radial-gradient(circle at 88% 18%, var(--bg-glow-b), transparent 38%),
         radial-gradient(circle at 50% 92%, var(--bg-glow-c), transparent 42%);
       color: var(--text-main);
-      font-family: "Inter", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: "Inter", "Plus Jakarta Sans", "Noto Sans CJK SC", "Noto Sans CJK KR", "Noto Sans CJK JP", "PingFang SC", "Malgun Gothic", "Hiragino Kaku Gothic ProN", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       transition: background-color 0.28s ease, color 0.28s ease;
       overflow-x: hidden;
     }
@@ -189,7 +189,7 @@
       letter-spacing: -0.2px;
     }
 
-    /* Device + OS + Root/JB + Notice inside Merged Block 1 */
+    /* Device + OS + Root/JB + Network inside Merged Block 1 */
     .env-banner {
       display: flex;
       align-items: center;
@@ -235,6 +235,11 @@
       color: var(--accent-lilac);
     }
 
+    .soft-pill.net {
+      color: var(--accent-coral);
+      background: rgba(251, 113, 133, 0.12);
+    }
+
     .soft-pill.jb-yes {
       color: var(--accent-mint);
       background: rgba(94, 234, 212, 0.12);
@@ -247,7 +252,7 @@
 
     .env-tiles {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
 
@@ -274,6 +279,7 @@
       margin-top: 9px;
       font-size: 12px;
       color: var(--text-soft);
+      line-height: 1.5;
     }
 
     .mag-rule {
@@ -489,7 +495,7 @@
       margin: 4px 0;
     }
 
-    /* Part 4: General Introduction (Giới thiệu chung) */
+    /* Part 4: General Introduction */
     .intro-split {
       display: grid;
       grid-template-columns: 1.4fr 1fr;
@@ -725,25 +731,29 @@
       </div>
 
       <div class="mag-controls">
-        <button type="button" class="pill-btn is-active" id="mouseFxToggle" title="Bật/Tắt hiệu ứng động chuột & trái tim">
+        <button type="button" class="pill-btn is-active" id="mouseFxToggle" title="Mouse & Heart FX">
           <span>✨</span>
-          <span class="pill-text">Động chuột</span>
+          <span class="pill-text" id="mouseFxLabel">Động chuột</span>
         </button>
-        <button type="button" class="pill-btn" id="ambientHeartToggle" title="Bật/Tắt trái tim bay tự động">
+        <button type="button" class="pill-btn" id="ambientHeartToggle" title="Floating Hearts">
           <span>💞</span>
-          <span class="pill-text">Tim bay</span>
+          <span class="pill-text" id="ambientHeartLabel">Tim bay</span>
         </button>
-        <button type="button" class="pill-btn" id="themeSwitchBtn" title="Chuyển chế độ Sáng / Tối">
+        <button type="button" class="pill-btn is-active" id="langSwitchBtn" title="Switch Language VI / EN / ZH / KO / JA">
+          <span>🌐</span>
+          <span class="pill-text" id="langSwitchLabel">VI</span>
+        </button>
+        <button type="button" class="pill-btn" id="themeSwitchBtn" title="Light / Dark Theme">
           <span id="themeSwitchIcon">☀️</span>
           <span class="pill-text" id="themeSwitchLabel">Sáng</span>
         </button>
       </div>
     </header>
 
-    <!-- MERGED BLOCK 1: DEVICE + OS/VERSION + ROOT/JAILBREAK + NOTIFICATIONS -->
-    <section class="mag-card" aria-label="Thiết bị và Thông báo">
-      <span class="mag-kicker">Nhận diện &amp; Bản tin</span>
-      <h1 class="mag-title">Thiết bị, Hệ điều hành &amp; Thông báo</h1>
+    <!-- MERGED BLOCK 1: DEVICE + OS/VERSION + ROOT/JAILBREAK + NETWORK + NOTIFICATIONS -->
+    <section class="mag-card" aria-label="Device, Network and Notices">
+      <span class="mag-kicker" id="kickerEnv">Nhận diện &amp; Bản tin</span>
+      <h1 class="mag-title" id="titleEnv">Thiết bị, Hệ điều hành, Mạng &amp; Thông báo</h1>
 
       <div class="env-banner">
         <div class="env-badge-icon" id="envIcon">💻</div>
@@ -751,6 +761,7 @@
           <h2 class="env-device-name" id="envDevice">Đang nhận diện thiết bị...</h2>
           <div class="env-pills">
             <span class="soft-pill cat" id="envCategory">Đang kiểm tra</span>
+            <span class="soft-pill net" id="envNetBadge">Đang kiểm tra mạng...</span>
             <span class="soft-pill jb-no" id="jbRootBadge">Đang kiểm tra Root / Jailbreak...</span>
           </div>
         </div>
@@ -758,19 +769,27 @@
 
       <div class="env-tiles">
         <div class="env-tile">
-          <div class="env-tile-label">Hệ điều hành</div>
+          <div class="env-tile-label" id="lblOS">Hệ điều hành</div>
           <div class="env-tile-val" id="envOS">--</div>
         </div>
         <div class="env-tile">
-          <div class="env-tile-label">Phần mềm / OS</div>
+          <div class="env-tile-label" id="lblVersion">Phần mềm / OS</div>
           <div class="env-tile-val" id="envVersion">--</div>
         </div>
         <div class="env-tile">
-          <div class="env-tile-label">Trạng thái Root / JB</div>
+          <div class="env-tile-label" id="lblJb">Trạng thái Root / JB</div>
           <div class="env-tile-val" id="envJbStatus">--</div>
         </div>
         <div class="env-tile">
-          <div class="env-tile-label">Màn hình</div>
+          <div class="env-tile-label" id="lblNetType">Mạng đang dùng</div>
+          <div class="env-tile-val" id="envNetType">--</div>
+        </div>
+        <div class="env-tile">
+          <div class="env-tile-label" id="lblCarrier">Nhà mạng / ISP</div>
+          <div class="env-tile-val" id="envCarrier">--</div>
+        </div>
+        <div class="env-tile">
+          <div class="env-tile-label" id="lblScreen">Tỷ lệ &amp; Màn hình</div>
           <div class="env-tile-val" id="envScreen">--</div>
         </div>
       </div>
@@ -779,19 +798,17 @@
       <div class="mag-rule"></div>
 
       <div class="bulletin-box">
-        <span class="mag-kicker">Cập nhật mới</span>
-        <h2 class="mag-title">Thông báo</h2>
-        <p>- Đã cập nhật chứng chỉ mới update 06-11-2026</p>
-        <p>- Đã cập nhật IOS 17 Beta Trong Phần Cấu Hình</p>
-        <p>- Liên hệ Facebook <a href="https://www.facebook.com/longmenjp94">Truy cập</a> khi cần được hỗ trợ!</p>
-        <p>- Trang chủ : <a href="https://longmen06.github.io">https://longmen06.github.io/</a></p>
+        <span class="mag-kicker" id="kickerNotice">Cập nhật mới</span>
+        <h2 class="mag-title" id="titleNotice">Thông báo</h2>
+        <p id="notice3">- Liên hệ Facebook <a href="https://www.facebook.com/longmenjb">Truy cập</a> khi cần được hỗ trợ!</p>
+        <p id="notice4">- Trang chủ : <a href="https://longmen06.github.io">https://longmen06.github.io/</a></p>
       </div>
     </section>
 
     <!-- MERGED BLOCK 2: SOURCES, APPS, JAILBREAKS & CONFIGS -->
-    <section class="mag-card" aria-label="Nguồn Cydia, Sileo và Tiện ích">
-      <span class="mag-kicker">Kho tiện ích</span>
-      <h2 class="mag-title">Nguồn Cydia, Sileo, Ứng dụng &amp; Cấu hình</h2>
+    <section class="mag-card" aria-label="Cydia, Sileo and Utilities">
+      <span class="mag-kicker" id="kickerRepo">Kho tiện ích</span>
+      <h2 class="mag-title" id="titleRepo">Nguồn Cydia, Sileo, Ứng dụng &amp; Cấu hình</h2>
 
       <div class="tiles-grid">
         <a class="soft-tile" href="cydia://url/https://cydia.saurik.com/api/share#?source=https://longmen06.github.io/">
@@ -814,15 +831,15 @@
           <img src="https://longmen06.github.io/icons/dangtai.png" alt="Long Mến Jailbreak">
           <div class="soft-tile-body">
             <div class="soft-tile-top"><span class="soft-tile-name">LM Box</span><span class="soft-tile-ver">3.20.37</span></div>
-            <div class="soft-tile-subrow"><span class="soft-tile-author">@longmenjb</span><span class="soft-tile-fw">11.0 - 14.3</span></div>
+            <div class="soft-tile-subrow"><span class="soft-tile-author"></span><span class="soft-tile-fw">11.0 - 14.3</span></div>
           </div>
         </a>
 
         <a class="soft-tile" href="itms-services://?action=download-manifest&url=https://longmen06.github.io/plist/headvn.plist">
           <img src="https://longmen06.github.io/icons/headvn.png" alt="Chiến Dịch Huyền Thoại">
           <div class="soft-tile-body">
-            <div class="soft-tile-top"><span class="soft-tile-name">Chiến Dịch Huyền Thoại</span></div>
-            <div class="soft-tile-subrow"><span class="soft-tile-author">@longmenjp</span><span class="soft-tile-fw">10.0 - 16.3</span></div>
+            <div class="soft-tile-top"><span class="soft-tile-name" data-i18n="appHeadvn">Chiến Dịch Huyền Thoại</span></div>
+            <div class="soft-tile-subrow"><span class="soft-tile-author"></span><span class="soft-tile-fw">10.0 - 16.3</span></div>
           </div>
         </a>
 
@@ -835,25 +852,25 @@
         </a>
 
         <a class="soft-tile" href="itms-services://?action=download-manifest&url=https://longmen06.github.io/plist/fb2.plist">
-          <img src="https://longmen06.github.io/icons/fb2.png" alt="FB2 Long Mến">
+          <img src="https://longmen06.github.io/icons/fb2.png" alt="Facebook 2">
           <div class="soft-tile-body">
-            <div class="soft-tile-top"><span class="soft-tile-name">FB2</span></div>
+            <div class="soft-tile-top"><span class="soft-tile-name" data-i18n="appFb2">Facebook 2</span></div>
             <div class="soft-tile-subrow"><span class="soft-tile-author"></span><span class="soft-tile-fw">10.0 - 16.3</span></div>
           </div>
         </a>
 
         <a class="soft-tile" href="itms-services://?action=download-manifest&url=https://longmen06.github.io/plist/mess2.plist">
-          <img src="https://longmen06.github.io/icons/mess2.png" alt="Mess2 Long Mến">
+          <img src="https://longmen06.github.io/icons/mess2.png" alt="Messenger 2">
           <div class="soft-tile-body">
-            <div class="soft-tile-top"><span class="soft-tile-name">Mess2</span></div>
+            <div class="soft-tile-top"><span class="soft-tile-name" data-i18n="appMess2">Messenger 2</span></div>
             <div class="soft-tile-subrow"><span class="soft-tile-author"></span><span class="soft-tile-fw">10.0 - 16.3</span></div>
           </div>
         </a>
 
         <a class="soft-tile" href="itms-services://?action=download-manifest&url=https://longmen06.github.io/plist/zalo2.plist">
-          <img src="https://longmen06.github.io/icons/zalo2.png" alt="Zalo Long Mến">
+          <img src="https://longmen06.github.io/icons/zalo2.png" alt="Zalo 2">
           <div class="soft-tile-body">
-            <div class="soft-tile-top"><span class="soft-tile-name">Zalo</span></div>
+            <div class="soft-tile-top"><span class="soft-tile-name" data-i18n="appZalo2">Zalo 2</span></div>
             <div class="soft-tile-subrow"><span class="soft-tile-author"></span><span class="soft-tile-fw">10.0 - 16.3</span></div>
           </div>
         </a>
@@ -910,7 +927,7 @@
           <img src="img/Lira.png" alt="Lira">
           <div class="soft-tile-body">
             <div class="soft-tile-top"><span class="soft-tile-name">Lira</span><span class="soft-tile-ver">v1.2.1</span></div>
-            <div class="soft-tile-subrow"><span class="soft-tile-author">Hoà Huỳnh</span><span class="soft-tile-fw">13.0 - 13.5.1 beta 1</span></div>
+            <div class="soft-tile-subrow"><span class="soft-tile-author" data-i18n="authorHoa">Hoà Huỳnh</span><span class="soft-tile-fw">13.0 - 13.5.1 beta 1</span></div>
           </div>
         </a>
 
@@ -925,8 +942,8 @@
         <a class="soft-tile" href="https://alexia.lol/noota16.mobileconfig">
           <img src="img/block-ota.png" alt="Chặn cập nhật iOS/iPadOS">
           <div class="soft-tile-body">
-            <div class="soft-tile-top"><span class="soft-tile-name">Chặn cập nhật iOS/iPadOS</span><span class="soft-tile-ver">tvOS</span></div>
-            <div class="soft-tile-subrow"><span class="soft-tile-author">@Apple</span><span class="soft-tile-fw">All iOS/iPadOS</span></div>
+            <div class="soft-tile-top"><span class="soft-tile-name" data-i18n="cfgBlockOta">Chặn cập nhật iOS/iPadOS</span><span class="soft-tile-ver">tvOS</span></div>
+            <div class="soft-tile-subrow"><span class="soft-tile-author">@Apple</span><span class="soft-tile-fw" data-i18n="fwAllIos">All iOS/iPadOS</span></div>
           </div>
         </a>
 
@@ -967,7 +984,7 @@
     <!-- PART 3: COMPACT COLLAPSIBLE ICCID -->
     <section class="iccid-panel" id="iccidAccordion" aria-label="ICCID">
       <button type="button" class="iccid-btn" id="iccidToggleBtn" aria-expanded="false" aria-controls="iccidDrawer">
-        <span>3. ICCID &amp; Hướng dẫn ghép SIM</span>
+        <span id="iccidHeaderText">3. ICCID &amp; Hướng dẫn ghép SIM</span>
         <span class="iccid-indicator" aria-hidden="true">▾</span>
       </button>
 
@@ -981,37 +998,37 @@
               </div>
               <button type="button" class="pill-btn is-active" id="copyIccidBtn">
                 <span>📋</span>
-                <span>Sao chép ICCID</span>
+                <span id="copyIccidLabel">Sao chép ICCID</span>
               </button>
             </div>
 
             <div class="iccid-steps">
-              <p>=&gt; Máy phải lên 15</p>
-              <p>=&gt; Với Bison Sim : lắp vào &gt; Kích hoạt. Đổi ICCID bấm * &amp; Gọi (chờ 5 giây) &gt; Nhập iccid &gt; Gửi &gt; Kích hoạt.</p>
-              <p>=&gt; Với sim NR-Pro | Vip-Pt : lắp vào &gt; Kích hoạt. Đổi ICCID bấm # &amp; Gọi &gt; Nhập iccid &gt; Gửi &gt; Kích hoạt.</p>
-              <p>=&gt; Với sim Club 9 Mode : lắp vào &gt; Kích hoạt. Đổi ICCID bấm # &amp; Gọi &gt; Nhập iccid &gt; Gửi &gt; Chọn Mode 7 &gt; Kích hoạt.</p>
-              <p>* Ghép xong phải gắn sim ghép trong. Fix full mọi chức năng như máy QT. Apple có thể chặn bất kể lúc nào, nên cứ tranh thủ.</p>
+              <p id="iccidP1">=&gt; Máy phải lên 15</p>
+              <p id="iccidP2">=&gt; Với Bison Sim : lắp vào &gt; Kích hoạt. Đổi ICCID bấm * &amp; Gọi (chờ 5 giây) &gt; Nhập iccid &gt; Gửi &gt; Kích hoạt.</p>
+              <p id="iccidP3">=&gt; Với sim NR-Pro | Vip-Pt : lắp vào &gt; Kích hoạt. Đổi ICCID bấm # &amp; Gọi &gt; Nhập iccid &gt; Gửi &gt; Kích hoạt.</p>
+              <p id="iccidP4">=&gt; Với sim Club 9 Mode : lắp vào &gt; Kích hoạt. Đổi ICCID bấm # &amp; Gọi &gt; Nhập iccid &gt; Gửi &gt; Chọn Mode 7 &gt; Kích hoạt.</p>
+              <p id="iccidP5">* Ghép xong phải gắn sim ghép trong. Fix full mọi chức năng như máy QT. Apple có thể chặn bất kể lúc nào, nên cứ tranh thủ.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PART 4: GENERAL INTRODUCTION (GIỚI THIỆU CHUNG) -->
-    <section class="mag-card" aria-label="Giới thiệu chung">
-      <span class="mag-kicker">Tổng quan</span>
-      <h2 class="mag-title">Giới thiệu chung</h2>
+    <!-- PART 4: GENERAL INTRODUCTION -->
+    <section class="mag-card" aria-label="About">
+      <span class="mag-kicker" id="kickerIntro">Tổng quan</span>
+      <h2 class="mag-title" id="titleIntro">Giới thiệu chung</h2>
 
       <div class="intro-split">
         <div class="intro-text">
-          <p>Kho tổng hợp các công cụ jailbreak, tiện ích tùy biến hệ thống, cấu hình iOS/iPadOS và hướng dẫn ghép SIM được cập nhật nhanh chóng.</p>
-          <p>Sau khi bấm tải ứng dụng hoặc cấu hình, hãy mở <strong>Cài đặt &gt; Cài đặt chung &gt; Quản lý cấu hình &amp; thiết bị</strong> để tin cậy nhà phát triển nếu cần.</p>
-          <p>Cập nhật: <strong>04-03-2023 / 09:47 am</strong> · Chứng Chỉ Update: <strong>06-11-2026</strong>.</p>
+          <p id="introP1">Kho tổng hợp các công cụ jailbreak, tiện ích tùy biến hệ thống, cấu hình iOS/iPadOS và hướng dẫn ghép SIM được cập nhật nhanh chóng.</p>
+          <p id="introP2">Sau khi bấm tải ứng dụng hoặc cấu hình, hãy mở <strong>Cài đặt &gt; Cài đặt chung &gt; Quản lý cấu hình &amp; thiết bị</strong> để tin cậy nhà phát triển nếu cần.</p>
+          <p id="introP3">Cập nhật: <strong>04-03-2023 / 09:47 am</strong> · Chứng Chỉ Update: <strong>18-11-2026</strong>.</p>
         </div>
 
         <div class="intro-links">
           <div><strong>Twitter:</strong> <a href="https://twitter.com/LongMenDev">Truy cập</a></div>
-          <div><strong>Facebook:</strong> <a href="https://facebook.com/longmenjailbreak">Truy cập</a></div>
+          <div><strong>Facebook:</strong> <a href="https://facebook.com/longmenjb">Truy cập</a></div>
         </div>
       </div>
     </section>
@@ -1025,6 +1042,448 @@
     (function () {
       const toastBubble = document.getElementById("toastBubble");
       let toastTimer = null;
+
+      const LANG_ORDER = ["vi", "en", "zh", "ko", "ja"];
+      const savedLang = localStorage.getItem("longmen_mag_lang");
+      let currentLang = LANG_ORDER.includes(savedLang) ? savedLang : "vi";
+      let cachedIspInfo = null;
+
+      const I18N = {
+        vi: {
+          htmlLang: "vi",
+          mouseFx: "Động chuột",
+          ambientHeart: "Tim bay",
+          langLabel: "VI",
+          themeLight: "Sáng",
+          themeDark: "Tối",
+          kickerEnv: "Nhận diện & Bản tin",
+          titleEnv: "Thiết bị, Hệ điều hành, Mạng & Thông báo",
+          detectingDevice: "Đang nhận diện thiết bị...",
+          checking: "Đang kiểm tra",
+          checkingNet: "Đang kiểm tra mạng...",
+          checkingJb: "Đang kiểm tra Root / Jailbreak...",
+          lblOS: "Hệ điều hành",
+          lblVersion: "Phần mềm / OS",
+          lblJb: "Trạng thái Root / JB",
+          lblNetType: "Mạng đang dùng",
+          lblCarrier: "Nhà mạng / ISP",
+          lblScreen: "Tỷ lệ & Màn hình",
+          kickerNotice: "Cập nhật mới",
+          titleNotice: "Thông báo",
+          notice3: '- Liên hệ Facebook <a href="https://www.facebook.com/longmenjb">Truy cập</a> khi cần được hỗ trợ!',
+          notice4: '- Trang chủ : <a href="https://longmen06.github.io">https://longmen06.github.io/</a>',
+          kickerRepo: "Kho tiện ích",
+          titleRepo: "Nguồn Cydia, Sileo, Ứng dụng & Cấu hình",
+          appHeadvn: "Chiến Dịch Huyền Thoại",
+          appFb2: "Facebook 2",
+          appMess2: "Messenger 2",
+          appZalo2: "Zalo 2",
+          authorHoa: "Hoà Huỳnh",
+          cfgBlockOta: "Chặn cập nhật iOS/iPadOS",
+          fwAllIos: "All iOS/iPadOS",
+          iccidHeader: "3. ICCID & Hướng dẫn ghép SIM",
+          copyIccid: "Sao chép ICCID",
+          iccidP1: "=> Máy phải lên 15",
+          iccidP2: "=> Với Bison Sim : lắp vào > Kích hoạt. Đổi ICCID bấm * & Gọi (chờ 5 giây) > Nhập iccid > Gửi > Kích hoạt.",
+          iccidP3: "=> Với sim NR-Pro | Vip-Pt : lắp vào > Kích hoạt. Đổi ICCID bấm # & Gọi > Nhập iccid > Gửi > Kích hoạt.",
+          iccidP4: "=> Với sim Club 9 Mode : lắp vào > Kích hoạt. Đổi ICCID bấm # & Gọi > Nhập iccid > Gửi > Chọn Mode 7 > Kích hoạt.",
+          iccidP5: "* Ghép xong phải gắn sim ghép trong. Fix full mọi chức năng như máy QT. Apple có thể chặn bất kể lúc nào, nên cứ tranh thủ.",
+          kickerIntro: "Tổng quan",
+          titleIntro: "Giới thiệu chung",
+          introP1: "Kho tổng hợp các công cụ jailbreak, tiện ích tùy biến hệ thống, cấu hình iOS/iPadOS và hướng dẫn ghép SIM được cập nhật nhanh chóng.",
+          introP2: "Sau khi bấm tải ứng dụng hoặc cấu hình, hãy mở <strong>Cài đặt > Cài đặt chung > Quản lý cấu hình & thiết bị</strong> để tin cậy nhà phát triển nếu cần.",
+          introP3: "Cập nhật: <strong>04-03-2023 / 09:47 am</strong> · Chứng Chỉ Update: <strong>18-11-2026</strong>.",
+          copiedToast: "Đã sao chép ICCID: ",
+          switchedLight: "Đã chuyển sang nền Sáng",
+          switchedDark: "Đã chuyển sang nền Tối",
+          switchedLang: "Đã chuyển sang Tiếng Việt",
+          mouseFxOn: "Đã bật hiệu ứng động chuột & trái tim",
+          mouseFxOff: "Đã tắt hiệu ứng động chuột",
+          ambientOn: "Đã bật trái tim chuyển động bay nền",
+          ambientOff: "Đã tắt trái tim bay nền",
+          catTablet: "Máy tính bảng (Tablet)",
+          catIosPhone: "Điện thoại iOS",
+          catAndroidPhone: "Điện thoại Android",
+          catAndroidTablet: "Tablet Android",
+          catWinTouch: "Laptop / PC cảm ứng",
+          catWinPc: "Laptop / PC Windows",
+          catMac: "MacBook / iMac (Laptop / PC)",
+          catLinux: "PC / Laptop Linux",
+          catOther: "Máy tính / Thiết bị khác",
+          verHiddenNew: "Phiên bản ẩn / Mới",
+          unknown: "Không rõ",
+          offlineNet: "Mất kết nối mạng (Offline)",
+          noNet: "Không có mạng",
+          unknownNet: "Không rõ / Trình duyệt ẩn",
+          unknownCarrier: "Đang tra cứu / Trình duyệt ẩn",
+          lanWired: "Mạng cắm dây LAN (Ethernet)",
+          lanEstimated: "Mạng cắm dây LAN / Cáp (ước lượng)",
+          wifiNet: "Wi-Fi",
+          ethNet: "Ethernet / LAN",
+          g5OrFast4g: "5G / 4G LTE nhanh",
+          g4Net: "4G / LTE",
+          g3Net: "3G",
+          g2Net: "2G / EDGE",
+          jbSignalUa: "Dấu hiệu Jailbreak trong User-Agent",
+          rootSignalUa: "Dấu hiệu Root trong User-Agent",
+          detectedPrefix: "Phát hiện JB / Root: ",
+          hasSignalPrefix: "Có dấu hiệu (",
+          signalNotePrefix: "Tín hiệu ghi nhận qua trình duyệt: ",
+          noRootWeb: "Chưa phát hiện Root qua web",
+          noJbWeb: "Chưa phát hiện Jailbreak qua web",
+          notApplicable: "Không áp dụng / Chưa phát hiện",
+          sandboxNote: "* Trình duyệt web giới hạn quyền truy cập trực tiếp cáp LAN/SIM/Root/JB nên một số thông tin dùng ước lượng hoặc tra cứu qua mạng.",
+          realLabel: "thực"
+        },
+        en: {
+          htmlLang: "en",
+          mouseFx: "Cursor FX",
+          ambientHeart: "Hearts",
+          langLabel: "EN",
+          themeLight: "Light",
+          themeDark: "Dark",
+          kickerEnv: "Detection & Bulletin",
+          titleEnv: "Device, OS, Network & Notices",
+          detectingDevice: "Detecting device...",
+          checking: "Checking",
+          checkingNet: "Checking network...",
+          checkingJb: "Checking Root / Jailbreak...",
+          lblOS: "Operating System",
+          lblVersion: "Software / OS",
+          lblJb: "Root / JB Status",
+          lblNetType: "Active Network",
+          lblCarrier: "Carrier / ISP",
+          lblScreen: "Aspect & Display",
+          kickerNotice: "Latest Updates",
+          titleNotice: "Notices",
+          notice3: '- Contact Facebook <a href="https://www.facebook.com/longmenjb">Truy cập</a> for support!',
+          notice4: '- Homepage : <a href="https://longmen06.github.io">https://longmen06.github.io/</a>',
+          kickerRepo: "Utility Box",
+          titleRepo: "Cydia, Sileo Sources, Apps & Profiles",
+          appHeadvn: "Chiến Dịch Huyền Thoại",
+          appFb2: "Facebook 2",
+          appMess2: "Messenger 2",
+          appZalo2: "Zalo 2",
+          authorHoa: "Hoà Huỳnh",
+          cfgBlockOta: "Block iOS/iPadOS OTA",
+          fwAllIos: "All iOS/iPadOS",
+          iccidHeader: "3. ICCID & SIM Unlock Guide",
+          copyIccid: "Copy ICCID",
+          iccidP1: "=> Device must be on iOS 15+",
+          iccidP2: "=> Bison Sim: insert > Activate. Change ICCID: dial * & Call (wait 5s) > Enter ICCID > Send > Activate.",
+          iccidP3: "=> NR-Pro | Vip-Pt SIM: insert > Activate. Change ICCID: dial # & Call > Enter ICCID > Send > Activate.",
+          iccidP4: "=> Club 9 Mode SIM: insert > Activate. Change ICCID: dial # & Call > Enter ICCID > Send > Choose Mode 7 > Activate.",
+          iccidP5: "* Keep the SIM chip installed after activation. Full carrier features like unlocked devices. Apple may patch at any time.",
+          kickerIntro: "Overview",
+          titleIntro: "General Introduction",
+          introP1: "Archive of jailbreak tools, system customization utilities, iOS/iPadOS profiles, and SIM unlock guides updated promptly.",
+          introP2: "After tapping install on an app or profile, open <strong>Settings > General > VPN & Device Management</strong> to trust the developer if needed.",
+          introP3: "Updated: <strong>04-03-2023 / 09:47 am</strong> · Cert Update: <strong>18-11-2026</strong>.",
+          copiedToast: "Copied ICCID: ",
+          switchedLight: "Switched to Light theme",
+          switchedDark: "Switched to Dark theme",
+          switchedLang: "Switched to English",
+          mouseFxOn: "Cursor & heart effects enabled",
+          mouseFxOff: "Cursor effects disabled",
+          ambientOn: "Floating background hearts enabled",
+          ambientOff: "Floating background hearts disabled",
+          catTablet: "Tablet",
+          catIosPhone: "iOS Phone",
+          catAndroidPhone: "Android Phone",
+          catAndroidTablet: "Android Tablet",
+          catWinTouch: "Touch Laptop / PC",
+          catWinPc: "Windows Laptop / PC",
+          catMac: "MacBook / iMac (Laptop / PC)",
+          catLinux: "Linux PC / Laptop",
+          catOther: "Computer / Other Device",
+          verHiddenNew: "Hidden / Newer",
+          unknown: "Unknown",
+          offlineNet: "Offline (No Connection)",
+          noNet: "No network",
+          unknownNet: "Unknown / Browser hidden",
+          unknownCarrier: "Lookup / Browser hidden",
+          lanWired: "Wired LAN (Ethernet)",
+          lanEstimated: "Wired LAN / Cable (estimated)",
+          wifiNet: "Wi-Fi",
+          ethNet: "Ethernet / LAN",
+          g5OrFast4g: "5G / Fast 4G LTE",
+          g4Net: "4G / LTE",
+          g3Net: "3G",
+          g2Net: "2G / EDGE",
+          jbSignalUa: "Jailbreak signal in User-Agent",
+          rootSignalUa: "Root signal in User-Agent",
+          detectedPrefix: "JB / Root detected: ",
+          hasSignalPrefix: "Signal found (",
+          signalNotePrefix: "Browser signals: ",
+          noRootWeb: "No Root detected via web",
+          noJbWeb: "No Jailbreak detected via web",
+          notApplicable: "N/A / Not detected",
+          sandboxNote: "* Browser sandboxing restricts direct LAN cable, SIM carrier, and deep Root/JB inspection; some values are estimated or network-queried.",
+          realLabel: "real"
+        },
+        zh: {
+          htmlLang: "zh-CN",
+          mouseFx: "鼠标特效",
+          ambientHeart: "飘心特效",
+          langLabel: "中文",
+          themeLight: "浅色",
+          themeDark: "深色",
+          kickerEnv: "设备识别与公告",
+          titleEnv: "设备、系统、网络与通知",
+          detectingDevice: "正在识别设备...",
+          checking: "正在检查",
+          checkingNet: "正在检查网络...",
+          checkingJb: "正在检查 Root / 越狱...",
+          lblOS: "操作系统",
+          lblVersion: "软件 / 系统版本",
+          lblJb: "Root / 越狱状态",
+          lblNetType: "当前网络",
+          lblCarrier: "运营商 / ISP",
+          lblScreen: "比例与屏幕",
+          kickerNotice: "最新更新",
+          titleNotice: "通知公告",
+          notice3: '- 需要帮助请联系 Facebook：<a href="https://www.facebook.com/longmenjb">Truy cập</a>',
+          notice4: '- 主页：<a href="https://longmen06.github.io">https://longmen06.github.io/</a>',
+          kickerRepo: "实用工具库",
+          titleRepo: "Cydia、Sileo 源、应用与描述文件",
+          appHeadvn: "Chiến Dịch Huyền Thoại",
+          appFb2: "Facebook 2",
+          appMess2: "Messenger 2",
+          appZalo2: "Zalo 2",
+          authorHoa: "Hoà Huỳnh",
+          cfgBlockOta: "屏蔽 iOS/iPadOS 系统更新",
+          fwAllIos: "全版本 iOS/iPadOS",
+          iccidHeader: "3. ICCID 与插卡解锁教程",
+          copyIccid: "复制 ICCID",
+          iccidP1: "=> 系统需升级至 iOS 15 或更高版本",
+          iccidP2: "=> Bison 芯片：插入 > 激活。修改 ICCID 拨打 * 并呼叫（等 5 秒）> 输入 ICCID > 发送 > 激活。",
+          iccidP3: "=> NR-Pro | Vip-Pt 卡贴：插入 > 激活。修改 ICCID 拨打 # 并呼叫 > 输入 ICCID > 发送 > 激活。",
+          iccidP4: "=> Club 9 Mode 卡贴：插入 > 激活。修改 ICCID 拨打 # 并呼叫 > 输入 ICCID > 发送 > 选择 Mode 7 > 激活。",
+          iccidP5: "* 激活后需保留卡贴。支持完整功能接近无锁机，苹果随时可能封堵，请尽快操作。",
+          kickerIntro: "概览",
+          titleIntro: "简介",
+          introP1: "快速更新越狱工具、系统美化工具、iOS/iPadOS 描述文件及卡贴解锁说明的工具库。",
+          introP2: "安装应用或描述文件后，请前往<strong>设置 > 通用 > VPN与设备管理</strong>信任开发者证书（如需要）。",
+          introP3: "更新时间：<strong>04-03-2023 / 09:47 am</strong> · 证书更新：<strong>18-11-2026</strong>。",
+          copiedToast: "已复制 ICCID：",
+          switchedLight: "已切换至浅色主题",
+          switchedDark: "已切换至深色主题",
+          switchedLang: "已切换至简体中文",
+          mouseFxOn: "已开启鼠标与爱心特效",
+          mouseFxOff: "已关闭鼠标特效",
+          ambientOn: "已开启背景飘心动画",
+          ambientOff: "已关闭背景飘心动画",
+          catTablet: "平板电脑",
+          catIosPhone: "iOS 手机",
+          catAndroidPhone: "安卓手机",
+          catAndroidTablet: "安卓平板",
+          catWinTouch: "触屏笔记本 / 台式机",
+          catWinPc: "Windows 电脑",
+          catMac: "MacBook / iMac 电脑",
+          catLinux: "Linux 电脑",
+          catOther: "电脑 / 其他设备",
+          verHiddenNew: "版本隐藏 / 较新",
+          unknown: "未知",
+          offlineNet: "网络已断开 (Offline)",
+          noNet: "无网络",
+          unknownNet: "未知 / 浏览器隐藏",
+          unknownCarrier: "查询中 / 浏览器隐藏",
+          lanWired: "有线局域网 LAN (Ethernet)",
+          lanEstimated: "有线 LAN / 网线（估算）",
+          wifiNet: "Wi-Fi",
+          ethNet: "以太网 / LAN",
+          g5OrFast4g: "5G / 高速 4G LTE",
+          g4Net: "4G / LTE",
+          g3Net: "3G",
+          g2Net: "2G / EDGE",
+          jbSignalUa: "User-Agent 中检测到越狱特征",
+          rootSignalUa: "User-Agent 中检测到 Root 特征",
+          detectedPrefix: "检测到越狱 / Root：",
+          hasSignalPrefix: "发现特征（",
+          signalNotePrefix: "浏览器检测到的特征：",
+          noRootWeb: "网页端未检测到 Root",
+          noJbWeb: "网页端未检测到越狱",
+          notApplicable: "不适用 / 未检测到",
+          sandboxNote: "* 浏览器沙盒限制直接读取网线、SIM 运营商及深度 Root/越狱信息，部分数据为估算或网络查询结果。",
+          realLabel: "实际"
+        },
+        ko: {
+          htmlLang: "ko",
+          mouseFx: "마우스 효과",
+          ambientHeart: "하트 효과",
+          langLabel: "한국어",
+          themeLight: "라이트",
+          themeDark: "다크",
+          kickerEnv: "기기 감지 및 공지",
+          titleEnv: "기기, OS, 네트워크 및 공지사항",
+          detectingDevice: "기기 확인 중...",
+          checking: "확인 중",
+          checkingNet: "네트워크 확인 중...",
+          checkingJb: "루팅 / 탈옥 확인 중...",
+          lblOS: "운영체제",
+          lblVersion: "소프트웨어 / OS",
+          lblJb: "루팅 / 탈옥 상태",
+          lblNetType: "연결된 네트워크",
+          lblCarrier: "통신사 / ISP",
+          lblScreen: "화면 비율 및 해상도",
+          kickerNotice: "최신 업데이트",
+          titleNotice: "공지사항",
+          notice3: '- 지원 문의 Facebook: <a href="https://www.facebook.com/longmenjb">Truy cập</a>',
+          notice4: '- 홈페이지: <a href="https://longmen06.github.io">https://longmen06.github.io/</a>',
+          kickerRepo: "유틸리티 저장소",
+          titleRepo: "Cydia, Sileo 소스, 앱 및 프로파일",
+          appHeadvn: "Chiến Dịch Huyền Thoại",
+          appFb2: "Facebook 2",
+          appMess2: "Messenger 2",
+          appZalo2: "Zalo 2",
+          authorHoa: "Hoà Huỳnh",
+          cfgBlockOta: "iOS/iPadOS 업데이트 차단",
+          fwAllIos: "전체 iOS/iPadOS",
+          iccidHeader: "3. ICCID 및 SIM 언락 가이드",
+          copyIccid: "ICCID 복사",
+          iccidP1: "=> iOS 15 이상 버전이어야 합니다",
+          iccidP2: "=> Bison SIM: 장착 > 활성화. ICCID 변경은 * 및 통화(5초 대기) > ICCID 입력 > 전송 > 활성화.",
+          iccidP3: "=> NR-Pro | Vip-Pt SIM: 장착 > 활성화. ICCID 변경은 # 및 통화 > ICCID 입력 > 전송 > 활성화.",
+          iccidP4: "=> Club 9 Mode SIM: 장착 > 활성화. ICCID 변경은 # 및 통화 > ICCID 입력 > 전송 > Mode 7 선택 > 활성화.",
+          iccidP5: "* 활성화 후 칩을 유지하세요. 언락 기기처럼 주요 기능이 작동하며 Apple이 언제든 차단할 수 있습니다.",
+          kickerIntro: "개요",
+          titleIntro: "소개",
+          introP1: "탈옥 도구, 시스템 커스터마이징 유틸리티, iOS/iPadOS 프로파일 및 SIM 언락 가이드를 빠르게 업데이트하는 저장소입니다.",
+          introP2: "앱 또는 프로파일 설치 후 필요시 <strong>설정 > 일반 > VPN 및 기기 관리</strong>에서 개발자를 신뢰하세요.",
+          introP3: "업데이트: <strong>04-03-2023 / 09:47 am</strong> · 인증서 업데이트: <strong>18-11-2026</strong>.",
+          copiedToast: "ICCID 복사됨: ",
+          switchedLight: "라이트 테마로 변경됨",
+          switchedDark: "다크 테마로 변경됨",
+          switchedLang: "한국어로 변경됨",
+          mouseFxOn: "마우스 및 하트 효과 켜짐",
+          mouseFxOff: "마우스 효과 꺼짐",
+          ambientOn: "배경 떠다니는 하트 켜짐",
+          ambientOff: "배경 떠다니는 하트 꺼짐",
+          catTablet: "태블릿",
+          catIosPhone: "iOS 스마트폰",
+          catAndroidPhone: "안드로이드 스마트폰",
+          catAndroidTablet: "안드로이드 태블릿",
+          catWinTouch: "터치 노트북 / PC",
+          catWinPc: "Windows 노트북 / PC",
+          catMac: "MacBook / iMac",
+          catLinux: "Linux PC / 노트북",
+          catOther: "컴퓨터 / 기타 기기",
+          verHiddenNew: "숨김 / 최신",
+          unknown: "알 수 없음",
+          offlineNet: "오프라인 (연결 없음)",
+          noNet: "네트워크 없음",
+          unknownNet: "알 수 없음 / 브라우저 숨김",
+          unknownCarrier: "조회 중 / 브라우저 숨김",
+          lanWired: "유선 LAN (Ethernet)",
+          lanEstimated: "유선 LAN / 케이블 (추정)",
+          wifiNet: "Wi-Fi",
+          ethNet: "이더넷 / LAN",
+          g5OrFast4g: "5G / 빠른 4G LTE",
+          g4Net: "4G / LTE",
+          g3Net: "3G",
+          g2Net: "2G / EDGE",
+          jbSignalUa: "User-Agent에서 탈옥 신호 감지",
+          rootSignalUa: "User-Agent에서 루팅 신호 감지",
+          detectedPrefix: "탈옥 / 루팅 감지: ",
+          hasSignalPrefix: "신호 발견 (",
+          signalNotePrefix: "브라우저 감지 신호: ",
+          noRootWeb: "웹에서 루팅 미감지",
+          noJbWeb: "웹에서 탈옥 미감지",
+          notApplicable: "해당 없음 / 미감지",
+          sandboxNote: "* 브라우저 보안 정책으로 유선 LAN, SIM 통신사, 심층 루팅/탈옥 확인이 제한되어 일부 값은 추정 또는 네트워크 조회로 표시됩니다.",
+          realLabel: "실제"
+        },
+        ja: {
+          htmlLang: "ja",
+          mouseFx: "カーソル演出",
+          ambientHeart: "ハート演出",
+          langLabel: "日本語",
+          themeLight: "ライト",
+          themeDark: "ダーク",
+          kickerEnv: "端末検出とお知らせ",
+          titleEnv: "端末・OS・ネットワーク・お知らせ",
+          detectingDevice: "端末を検出中...",
+          checking: "確認中",
+          checkingNet: "ネットワークを確認中...",
+          checkingJb: "Root / 脱獄を確認中...",
+          lblOS: "オペレーティングシステム",
+          lblVersion: "ソフトウェア / OS",
+          lblJb: "Root / 脱獄状態",
+          lblNetType: "接続中の回線",
+          lblCarrier: "通信事業者 / ISP",
+          lblScreen: "画面比率と解像度",
+          kickerNotice: "最新アップデート",
+          titleNotice: "お知らせ",
+          notice3: '- サポートは Facebook へ：<a href="https://www.facebook.com/longmenjb">Truy cập</a>',
+          notice4: '- ホームページ：<a href="https://longmen06.github.io">https://longmen06.github.io/</a>',
+          kickerRepo: "ユーティリティ倉庫",
+          titleRepo: "Cydia・Sileo ソース、アプリ、プロファイル",
+          appHeadvn: "Chiến Dịch Huyền Thoại",
+          appFb2: "Facebook 2",
+          appMess2: "Messenger 2",
+          appZalo2: "Zalo 2",
+          authorHoa: "Hoà Huỳnh",
+          cfgBlockOta: "iOS/iPadOS アップデートブロック",
+          fwAllIos: "全 iOS/iPadOS",
+          iccidHeader: "3. ICCID と SIM解除ガイド",
+          copyIccid: "ICCID をコピー",
+          iccidP1: "=> iOS 15 以降が必要です",
+          iccidP2: "=> Bison SIM：挿入 ＞ アクティベート。ICCID 変更は * と発信（5秒待機）＞ ICCID 入力 ＞ 送信 ＞ アクティベート。",
+          iccidP3: "=> NR-Pro | Vip-Pt SIM：挿入 ＞ アクティベート。ICCID 変更は # と発信 ＞ ICCID 入力 ＞ 送信 ＞ アクティベート。",
+          iccidP4: "=> Club 9 Mode SIM：挿入 ＞ アクティベート。ICCID 変更は # と発信 ＞ ICCID 入力 ＞ 送信 ＞ Mode 7 選択 ＞ アクティベート。",
+          iccidP5: "* アクティベート後もSIM下駄を装着したままにしてください。SIMフリー端末同様に使えますが、Apple により対策される場合があります。",
+          kickerIntro: "概要",
+          titleIntro: "はじめに",
+          introP1: "脱獄ツール、システムカスタマイズ、iOS/iPadOS プロファイル、SIM解除手順を素早く更新するアーカイブです。",
+          introP2: "アプリやプロファイルのインストール後、必要に応じて<strong>設定 ＞ 一般 ＞ VPNとデバイス管理</strong>からデベロッパを信頼してください。",
+          introP3: "更新日時：<strong>04-03-2023 / 09:47 am</strong> · 証明書更新：<strong>18-11-2026</strong>。",
+          copiedToast: "ICCID をコピーしました：",
+          switchedLight: "ライトテーマに切り替えました",
+          switchedDark: "ダークテーマに切り替えました",
+          switchedLang: "日本語に切り替えました",
+          mouseFxOn: "カーソル＆ハート演出を有効にしました",
+          mouseFxOff: "カーソル演出を無効にしました",
+          ambientOn: "背景の浮遊ハートを有効にしました",
+          ambientOff: "背景の浮遊ハートを無効にしました",
+          catTablet: "タブレット",
+          catIosPhone: "iOS スマートフォン",
+          catAndroidPhone: "Android スマートフォン",
+          catAndroidTablet: "Android タブレット",
+          catWinTouch: "タッチ対応ノートPC / PC",
+          catWinPc: "Windows ノートPC / PC",
+          catMac: "MacBook / iMac",
+          catLinux: "Linux PC / ノートPC",
+          catOther: "PC / その他の端末",
+          verHiddenNew: "非表示 / 新規",
+          unknown: "不明",
+          offlineNet: "オフライン（未接続）",
+          noNet: "ネットワークなし",
+          unknownNet: "不明 / ブラウザで非表示",
+          unknownCarrier: "取得中 / ブラウザで非表示",
+          lanWired: "有線 LAN (Ethernet)",
+          lanEstimated: "有線 LAN / ケーブル（推定）",
+          wifiNet: "Wi-Fi",
+          ethNet: "イーサネット / LAN",
+          g5OrFast4g: "5G / 高速 4G LTE",
+          g4Net: "4G / LTE",
+          g3Net: "3G",
+          g2Net: "2G / EDGE",
+          jbSignalUa: "User-Agent に脱獄の兆候あり",
+          rootSignalUa: "User-Agent に Root の兆候あり",
+          detectedPrefix: "脱獄 / Root 検出：",
+          hasSignalPrefix: "兆候あり（",
+          signalNotePrefix: "ブラウザで検出された兆候：",
+          noRootWeb: "Web上から Root は未検出",
+          noJbWeb: "Web上から脱獄は未検出",
+          notApplicable: "対象外 / 未検出",
+          sandboxNote: "* ブラウザの制限により、有線LAN・SIM通信事業者・詳細なRoot/脱獄状態の一部は推定値またはネットワーク照会となります。",
+          realLabel: "実"
+        }
+      };
+
+      function t(key) {
+        return (I18N[currentLang] && I18N[currentLang][key]) || I18N.vi[key] || "";
+      }
 
       function notify(msg) {
         toastBubble.textContent = msg;
@@ -1048,7 +1507,7 @@
         const code = iccidCodeValue.textContent.trim();
         try {
           await navigator.clipboard.writeText(code);
-          notify("Đã sao chép ICCID: " + code);
+          notify(t("copiedToast") + code);
         } catch (_) {
           notify("ICCID: " + code);
         }
@@ -1060,19 +1519,27 @@
       const themeSwitchIcon = document.getElementById("themeSwitchIcon");
       const themeSwitchLabel = document.getElementById("themeSwitchLabel");
 
+      function syncThemeLabel() {
+        const mode = rootEl.getAttribute("data-theme");
+        if (mode === "light") {
+          themeSwitchIcon.textContent = "🌙";
+          themeSwitchLabel.textContent = t("themeDark");
+        } else {
+          themeSwitchIcon.textContent = "☀️";
+          themeSwitchLabel.textContent = t("themeLight");
+        }
+      }
+
       function setTheme(mode) {
         rootEl.setAttribute("data-theme", mode);
         localStorage.setItem("longmen_mag_theme", mode);
         const metaTheme = document.querySelector('meta[name="theme-color"]');
         if (mode === "light") {
-          themeSwitchIcon.textContent = "🌙";
-          themeSwitchLabel.textContent = "Tối";
           if (metaTheme) metaTheme.setAttribute("content", "#faf6f2");
         } else {
-          themeSwitchIcon.textContent = "☀️";
-          themeSwitchLabel.textContent = "Sáng";
           if (metaTheme) metaTheme.setAttribute("content", "#141118");
         }
+        syncThemeLabel();
       }
 
       setTheme(localStorage.getItem("longmen_mag_theme") === "light" ? "light" : "dark");
@@ -1080,10 +1547,245 @@
       themeSwitchBtn.addEventListener("click", () => {
         const next = rootEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
         setTheme(next);
-        notify(next === "light" ? "Đã chuyển sang nền Sáng" : "Đã chuyển sang nền Tối");
+        notify(next === "light" ? t("switchedLight") : t("switchedDark"));
       });
 
-      // 2. DEVICE, OS, VERSION & ROOT / JAILBREAK DETECTION
+      // 2. LANGUAGE SWITCHER (VI / EN / ZH / KO / JA)
+      const langSwitchBtn = document.getElementById("langSwitchBtn");
+
+      function applyStaticTranslations() {
+        document.documentElement.lang = t("htmlLang");
+        document.getElementById("mouseFxLabel").textContent = t("mouseFx");
+        document.getElementById("ambientHeartLabel").textContent = t("ambientHeart");
+        document.getElementById("langSwitchLabel").textContent = t("langLabel");
+        syncThemeLabel();
+
+        document.getElementById("kickerEnv").textContent = t("kickerEnv");
+        document.getElementById("titleEnv").textContent = t("titleEnv");
+        document.getElementById("lblOS").textContent = t("lblOS");
+        document.getElementById("lblVersion").textContent = t("lblVersion");
+        document.getElementById("lblJb").textContent = t("lblJb");
+        document.getElementById("lblNetType").textContent = t("lblNetType");
+        document.getElementById("lblCarrier").textContent = t("lblCarrier");
+        document.getElementById("lblScreen").textContent = t("lblScreen");
+
+        document.getElementById("kickerNotice").textContent = t("kickerNotice");
+        document.getElementById("titleNotice").textContent = t("titleNotice");
+        const n3 = document.getElementById("notice3");
+        if (n3) n3.innerHTML = t("notice3");
+        const n4 = document.getElementById("notice4");
+        if (n4) n4.innerHTML = t("notice4");
+
+        document.getElementById("kickerRepo").textContent = t("kickerRepo");
+        document.getElementById("titleRepo").textContent = t("titleRepo");
+
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (I18N[currentLang][key]) {
+            el.textContent = I18N[currentLang][key];
+          }
+        });
+
+        document.getElementById("iccidHeaderText").textContent = t("iccidHeader");
+        document.getElementById("copyIccidLabel").textContent = t("copyIccid");
+        document.getElementById("iccidP1").textContent = t("iccidP1");
+        document.getElementById("iccidP2").textContent = t("iccidP2");
+        document.getElementById("iccidP3").textContent = t("iccidP3");
+        document.getElementById("iccidP4").textContent = t("iccidP4");
+        document.getElementById("iccidP5").textContent = t("iccidP5");
+
+        document.getElementById("kickerIntro").textContent = t("kickerIntro");
+        document.getElementById("titleIntro").textContent = t("titleIntro");
+        document.getElementById("introP1").textContent = t("introP1");
+        document.getElementById("introP2").innerHTML = t("introP2");
+        document.getElementById("introP3").innerHTML = t("introP3");
+      }
+
+      langSwitchBtn.addEventListener("click", () => {
+        const idx = LANG_ORDER.indexOf(currentLang);
+        currentLang = LANG_ORDER[(idx + 1) % LANG_ORDER.length];
+        localStorage.setItem("longmen_mag_lang", currentLang);
+        applyStaticTranslations();
+        detectEnvironmentAndJailbreak();
+        notify(t("switchedLang"));
+      });
+
+      // 3. NETWORK TYPE & CARRIER / ISP DETECTION
+      function normalizeCarrierName(rawName) {
+        const s = String(rawName || "").trim();
+        if (!s) return "";
+
+        const mappings = [
+          { re: /viettel/i, label: "Viettel" },
+          { re: /vinaphone/i, label: "VinaPhone" },
+          { re: /mobifone/i, label: "MobiFone" },
+          { re: /vietnamobile/i, label: "Vietnamobile" },
+          { re: /gmobile/i, label: "Gmobile" },
+          { re: /wintel/i, label: "Wintel" },
+          { re: /\bitel\b/i, label: "iTel" },
+          { re: /\bvnpt\b/i, label: "VNPT" },
+          { re: /\bfpt\b/i, label: "FPT Telecom" },
+          { re: /china\s*mobile/i, label: "China Mobile (中国移动)" },
+          { re: /china\s*unicom/i, label: "China Unicom (中国联通)" },
+          { re: /china\s*telecom/i, label: "China Telecom (中国电信)" },
+          { re: /sk\s*telecom/i, label: "SK Telecom" },
+          { re: /\bkt\b|korea\s*telecom/i, label: "KT" },
+          { re: /lg\s*u\+|lgu\+/i, label: "LG U+" },
+          { re: /ntt\s*docomo|docomo/i, label: "NTT docomo" },
+          { re: /\bau\b|kddi/i, label: "au (KDDI)" },
+          { re: /softbank/i, label: "SoftBank" },
+          { re: /rakuten/i, label: "Rakuten Mobile" },
+          { re: /at&t/i, label: "AT&T" },
+          { re: /verizon/i, label: "Verizon" },
+          { re: /t-mobile/i, label: "T-Mobile" },
+          { re: /vodafone/i, label: "Vodafone" }
+        ];
+
+        for (const item of mappings) {
+          if (item.re.test(s)) return item.label;
+        }
+        return s.replace(/^AS\d+\s+/i, "");
+      }
+
+      async function fetchPublicIspName() {
+        if (cachedIspInfo) return cachedIspInfo;
+
+        const endpoints = [
+          {
+            url: "https://ipwho.is/",
+            extract: (d) => (d && d.success && d.connection ? (d.connection.isp || d.connection.org || "") : "")
+          },
+          {
+            url: "https://ipapi.co/json/",
+            extract: (d) => (d && !d.error ? (d.org || d.asn || "") : "")
+          }
+        ];
+
+        for (const ep of endpoints) {
+          try {
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 2200);
+            const res = await fetch(ep.url, { signal: ctrl.signal, cache: "no-store" });
+            clearTimeout(timer);
+            if (!res.ok) continue;
+            const json = await res.json();
+            const raw = ep.extract(json);
+            const normalized = normalizeCarrierName(raw);
+            if (normalized) {
+              cachedIspInfo = normalized;
+              return normalized;
+            }
+          } catch (_) {}
+        }
+
+        return "";
+      }
+
+      async function detectNetworkAndCarrier(isDesktopNonMobile) {
+        if (!navigator.onLine) {
+          return {
+            networkLabel: t("offlineNet"),
+            carrierLabel: t("noNet")
+          };
+        }
+
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
+        let networkLabel = t("unknownNet");
+        let carrierLabel = "";
+        let detectedKind = "unknown";
+
+        if (conn) {
+          const rawType = String(conn.type || "").toLowerCase();
+          const eff = String(conn.effectiveType || "").toLowerCase();
+          const downlink = typeof conn.downlink === "number" ? conn.downlink : null;
+          const rtt = typeof conn.rtt === "number" ? conn.rtt : null;
+          const speedTag = downlink ? " (~" + downlink + " Mbps)" : "";
+
+          if (rawType === "ethernet") {
+            detectedKind = "lan";
+            networkLabel = t("lanWired") + speedTag;
+          } else if (rawType === "wifi") {
+            detectedKind = "wifi";
+            networkLabel = t("wifiNet") + speedTag;
+          } else if (rawType === "cellular" || eff) {
+            if (eff === "4g") {
+              if (downlink && downlink >= 50) {
+                detectedKind = "5g";
+                networkLabel = t("g5OrFast4g") + speedTag;
+              } else {
+                detectedKind = "4g";
+                networkLabel = t("g4Net") + speedTag;
+              }
+            } else if (eff === "3g") {
+              detectedKind = "3g";
+              networkLabel = t("g3Net") + speedTag;
+            } else if (eff === "2g" || eff === "slow-2g") {
+              detectedKind = "2g";
+              networkLabel = t("g2Net") + speedTag;
+            } else if (rawType) {
+              detectedKind = rawType;
+              networkLabel = rawType.toUpperCase() + speedTag;
+            }
+          } else if (isDesktopNonMobile && navigator.onLine) {
+            if ((downlink && downlink >= 20) || (rtt !== null && rtt <= 40)) {
+              detectedKind = "lan";
+              networkLabel = t("lanEstimated") + speedTag;
+            }
+          }
+        } else if (isDesktopNonMobile && navigator.onLine) {
+          detectedKind = "lan";
+          networkLabel = t("lanEstimated");
+        }
+
+        if (navigator.userAgentData && typeof navigator.userAgentData.getHighEntropyValues === "function") {
+          try {
+            const hints = await navigator.userAgentData.getHighEntropyValues(["network"]);
+            if (hints && hints.network) {
+              if (hints.network.carrier) {
+                carrierLabel = normalizeCarrierName(hints.network.carrier);
+              }
+              if (hints.network.type) {
+                const hintType = String(hints.network.type).toLowerCase();
+                detectedKind = hintType;
+                networkLabel = hintType === "ethernet" ? t("lanWired") : hintType.toUpperCase();
+              }
+            }
+          } catch (_) {}
+        }
+
+        const ua = navigator.userAgent || "";
+        const matchedFromUa = normalizeCarrierName(ua);
+        if (!carrierLabel && matchedFromUa && matchedFromUa !== ua) {
+          carrierLabel = matchedFromUa;
+        }
+
+        if (!carrierLabel) {
+          const ispFromWeb = await fetchPublicIspName();
+          if (ispFromWeb) {
+            carrierLabel = ispFromWeb;
+          }
+        }
+
+        if (!carrierLabel) {
+          const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+          const lang = navigator.language || "";
+          if (/Asia\/Ho_Chi_Minh|Asia\/Saigon/i.test(tz) || /\bvi\b/i.test(lang)) {
+            carrierLabel = "VN Carrier / ISP";
+          } else if (/Asia\/Shanghai|Asia\/Chongqing|Asia\/Harbin|Asia\/Urumqi/i.test(tz) || /zh/i.test(lang)) {
+            carrierLabel = "中国运营商 / ISP";
+          } else if (/Asia\/Seoul/i.test(tz) || /\bko\b/i.test(lang)) {
+            carrierLabel = "한국 통신사 / ISP";
+          } else if (/Asia\/Tokyo/i.test(tz) || /\bja\b/i.test(lang)) {
+            carrierLabel = "日本キャリア / ISP";
+          } else {
+            carrierLabel = t("unknownCarrier");
+          }
+        }
+
+        return { networkLabel, carrierLabel, detectedKind };
+      }
+
+      // 4. DEVICE, OS, VERSION, SCREEN RATIO & ROOT / JAILBREAK DETECTION
       async function probeCustomScheme(schemeUrl) {
         return new Promise((resolve) => {
           let settled = false;
@@ -1108,16 +1810,56 @@
         });
       }
 
+      function gcd(a, b) {
+        let x = Math.round(Math.abs(a));
+        let y = Math.round(Math.abs(b));
+        while (y) {
+          const t = y;
+          y = x % y;
+          x = t;
+        }
+        return x || 1;
+      }
+
+      function getAspectRatioLabel(w, h) {
+        if (!w || !h) return "--";
+        const ratio = w / h;
+        const commonRatios = [
+          { label: "16:9", val: 16 / 9 },
+          { label: "16:10", val: 16 / 10 },
+          { label: "21:9", val: 21 / 9 },
+          { label: "3:2", val: 3 / 2 },
+          { label: "4:3", val: 4 / 3 },
+          { label: "9:16", val: 9 / 16 },
+          { label: "19.5:9", val: 19.5 / 9 },
+          { label: "20:9", val: 20 / 9 }
+        ];
+        for (const item of commonRatios) {
+          if (Math.abs(ratio - item.val) <= 0.04) {
+            return item.label;
+          }
+        }
+        const divisor = gcd(w, h);
+        const rw = Math.round(w / divisor);
+        const rh = Math.round(h / divisor);
+        if (rw <= 32 && rh <= 32) {
+          return rw + ":" + rh;
+        }
+        return ratio.toFixed(2) + ":1";
+      }
+
       async function detectEnvironmentAndJailbreak() {
         const ua = navigator.userAgent || "";
         const platform = navigator.platform || "";
         const touchCount = navigator.maxTouchPoints || 0;
+        const dpr = window.devicePixelRatio || 1;
 
-        let device = "Thiết bị không rõ";
-        let category = "Máy tính / Thiết bị khác";
-        let os = "Không rõ";
-        let version = "Không rõ";
+        let device = t("detectingDevice");
+        let category = t("catOther");
+        let os = t("unknown");
+        let version = t("unknown");
         let icon = "💻";
+        let isDesktopNonMobile = false;
 
         const isIPhone = /iPhone/i.test(ua);
         const isIPod = /iPod/i.test(ua);
@@ -1126,55 +1868,88 @@
         if (isIPhone || isIPad || isIPod) {
           os = isIPad ? "iPadOS" : "iOS";
           icon = isIPad ? "📟" : "📱";
-          category = isIPad ? "Máy tính bảng (Tablet)" : "Điện thoại iOS";
+          category = isIPad ? t("catTablet") : t("catIosPhone");
           device = isIPhone ? "iPhone" : isIPad ? "iPad" : "iPod touch";
           const m = ua.match(/OS (\d+[_.]\d+(?:[_.]\d+)?)/i);
-          version = m ? m[1].replace(/_/g, ".") : "Phiên bản ẩn / Mới";
+          version = m ? m[1].replace(/_/g, ".") : t("verHiddenNew");
         } else if (/Android/i.test(ua)) {
           os = "Android";
           icon = "🤖";
           const mobile = /Mobile/i.test(ua);
-          category = mobile ? "Điện thoại Android" : "Tablet Android";
+          category = mobile ? t("catAndroidPhone") : t("catAndroidTablet");
           const model = ua.match(/;\s*([^;)]+)\s+Build\//i);
-          device = (model && model[1]) ? model[1].trim() : (mobile ? "Điện thoại Android" : "Tablet Android");
+          device = (model && model[1]) ? model[1].trim() : (mobile ? t("catAndroidPhone") : t("catAndroidTablet"));
           const ver = ua.match(/Android\s+([\d.]+)/i);
-          version = ver ? ver[1] : "Không rõ";
+          version = ver ? ver[1] : t("unknown");
         } else if (/Windows NT/i.test(ua)) {
           os = "Windows";
           icon = "🖥️";
-          category = touchCount > 0 ? "Laptop / PC cảm ứng" : "Laptop / PC Windows";
-          device = touchCount > 0 ? "Laptop / PC (Touch)" : "Máy tính PC / Laptop";
+          isDesktopNonMobile = touchCount === 0;
+          category = touchCount > 0 ? t("catWinTouch") : t("catWinPc");
+          device = touchCount > 0 ? "Laptop / PC (Touch)" : "PC / Laptop";
           const winVer = { "10.0": "10 / 11", "6.3": "8.1", "6.2": "8", "6.1": "7" };
           const m = ua.match(/Windows NT\s+([\d.]+)/i);
-          version = m ? (winVer[m[1]] || m[1]) : "Không rõ";
+          version = m ? (winVer[m[1]] || m[1]) : t("unknown");
         } else if (/Macintosh|Mac OS X/i.test(ua)) {
           os = "macOS";
           icon = "💻";
-          category = "MacBook / iMac (Laptop / PC)";
+          isDesktopNonMobile = true;
+          category = t("catMac");
           device = "Mac (macOS)";
           const m = ua.match(/Mac OS X\s+([\d_]+)/i);
-          version = m ? m[1].replace(/_/g, ".") : "Không rõ";
+          version = m ? m[1].replace(/_/g, ".") : t("unknown");
         } else if (/Linux/i.test(ua)) {
           os = "Linux";
           icon = "🐧";
-          category = "PC / Laptop Linux";
-          device = "Máy tính Linux";
+          isDesktopNonMobile = touchCount === 0;
+          category = t("catLinux");
+          device = "Linux PC";
           version = platform || "Linux";
         }
+
+        if (navigator.userAgentData && typeof navigator.userAgentData.getHighEntropyValues === "function") {
+          try {
+            const hints = await navigator.userAgentData.getHighEntropyValues(["platformVersion", "model"]);
+            if (hints.model && !/iPhone|iPad|Windows/i.test(device)) {
+              device = hints.model;
+            }
+            if (os === "Windows" && hints.platformVersion) {
+              const major = parseInt(hints.platformVersion.split(".")[0], 10);
+              if (!Number.isNaN(major)) {
+                version = major >= 13 ? "11 (" + hints.platformVersion + ")" : "10 (" + hints.platformVersion + ")";
+              }
+            } else if (hints.platformVersion && version === t("unknown")) {
+              version = hints.platformVersion;
+            }
+          } catch (_) {}
+        }
+
+        const sw = window.screen.width || window.innerWidth;
+        const sh = window.screen.height || window.innerHeight;
+        const realW = Math.round(sw * dpr);
+        const realH = Math.round(sh * dpr);
+        const aspectLabel = getAspectRatioLabel(sw, sh);
+        const scalePercent = Math.round(dpr * 100);
+
+        const netInfo = await detectNetworkAndCarrier(isDesktopNonMobile);
 
         document.getElementById("envIcon").textContent = icon;
         document.getElementById("envDevice").textContent = device;
         document.getElementById("envCategory").textContent = category;
+        document.getElementById("envNetBadge").textContent = netInfo.networkLabel + " · " + netInfo.carrierLabel;
         document.getElementById("envOS").textContent = os;
         document.getElementById("envVersion").textContent = version;
-        document.getElementById("envScreen").textContent = window.screen.width + "×" + window.screen.height;
+        document.getElementById("envNetType").textContent = netInfo.networkLabel;
+        document.getElementById("envCarrier").textContent = netInfo.carrierLabel;
+        document.getElementById("envScreen").textContent =
+          aspectLabel + " (" + sw + "×" + sh + " · " + t("realLabel") + " ~" + realW + "×" + realH + " · " + scalePercent + "%)";
 
         const signals = [];
         if (/cydia|sileo|zebra|unc0ver|taurine|checkra1n|palera1n|dopamine|rootless/i.test(ua)) {
-          signals.push("Dấu hiệu Jailbreak trong User-Agent");
+          signals.push(t("jbSignalUa"));
         }
         if (/magisk|supersu|kernelsu|xposed|root/i.test(ua)) {
-          signals.push("Dấu hiệu Root trong User-Agent");
+          signals.push(t("rootSignalUa"));
         }
 
         if (isIPhone || isIPad || isIPod) {
@@ -1191,26 +1966,45 @@
         const noteEl = document.getElementById("jbDetailNote");
 
         if (signals.length > 0) {
-          badgeEl.textContent = "Phát hiện JB / Root: " + signals.join(", ");
+          badgeEl.textContent = t("detectedPrefix") + signals.join(", ");
           badgeEl.className = "soft-pill jb-yes";
-          statusEl.textContent = "Có dấu hiệu (" + signals.join(", ") + ")";
-          noteEl.textContent = "Tín hiệu ghi nhận qua trình duyệt: " + signals.join(", ") + ".";
+          statusEl.textContent = t("hasSignalPrefix") + signals.join(", ") + ")";
+          noteEl.textContent = t("signalNotePrefix") + signals.join(", ") + ".";
         } else {
           const label = /Android/i.test(ua)
-            ? "Chưa phát hiện Root qua web"
+            ? t("noRootWeb")
             : (isIPhone || isIPad || isIPod)
-              ? "Chưa phát hiện Jailbreak qua web"
-              : "Không áp dụng / Chưa phát hiện";
+              ? t("noJbWeb")
+              : t("notApplicable");
           badgeEl.textContent = label;
           badgeEl.className = "soft-pill jb-no";
           statusEl.textContent = label;
-          noteEl.textContent = "* Trình duyệt web bị giới hạn sandbox nên chỉ kiểm tra được các tín hiệu nhận diện được qua web.";
+          noteEl.textContent = t("sandboxNote");
         }
       }
 
+      applyStaticTranslations();
       detectEnvironmentAndJailbreak();
+      window.addEventListener("resize", () => {
+        detectEnvironmentAndJailbreak();
+      }, { passive: true });
+      window.addEventListener("online", () => {
+        cachedIspInfo = null;
+        detectEnvironmentAndJailbreak();
+      });
+      window.addEventListener("offline", () => {
+        detectEnvironmentAndJailbreak();
+      });
 
-      // 3. MOUSE MOTION FX + MOVING HEARTS
+      const netConn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (netConn && typeof netConn.addEventListener === "function") {
+        netConn.addEventListener("change", () => {
+          cachedIspInfo = null;
+          detectEnvironmentAndJailbreak();
+        });
+      }
+
+      // 5. MOUSE MOTION FX + MOVING HEARTS
       let mouseFxEnabled = true;
       let ambientHeartOn = false;
       let lastHeartTime = 0;
@@ -1244,7 +2038,7 @@
         mouseFxEnabled = !mouseFxEnabled;
         mouseFxToggle.classList.toggle("is-active", mouseFxEnabled);
         if (!mouseFxEnabled) mouseAura.classList.remove("visible");
-        notify(mouseFxEnabled ? "Đã bật hiệu ứng động chuột & trái tim" : "Đã tắt hiệu ứng động chuột");
+        notify(mouseFxEnabled ? t("mouseFxOn") : t("mouseFxOff"));
       });
 
       function spawnMouseSparkles(x, y) {
@@ -1350,12 +2144,12 @@
         if (ambientHeartOn) {
           for (let i = 0; i < 6; i++) setTimeout(createAmbientHeart, i * 240);
           ambientInterval = setInterval(createAmbientHeart, 650);
-          notify("Đã bật trái tim chuyển động bay nền");
+          notify(t("ambientOn"));
         } else {
           clearInterval(ambientInterval);
           ambientInterval = null;
           ambientLayer.innerHTML = "";
-          notify("Đã tắt trái tim bay nền");
+          notify(t("ambientOff"));
         }
       });
     })();
